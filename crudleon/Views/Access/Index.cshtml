@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col">
+        <form action="/" method="post" id="frm">
+            Usuario
+            <input type="text" name="user" value="" />
+            Password
+            <input type="text" name="password" value="" />
+            <input type="submit" class="btn btn-success" value="Entrar" />
+        </form>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <!-- Content Here -->
+    <script>
+        $(document).ready(function () {
+            $("#frm").submit(function (e) {
+                e.preventDefault()
+                console.log('suaksdj')
+
+                url = "@Url.Content("~/Access/Enter")"
+                //url = "~/Access/Enter" En MVC 4 esto se puede hacer creo, en MVC 3 se tenia que usar el Url.Content
+                parametros = $(this).serialize()
+
+                console.log(url)
+
+                $.post(url, parametros, function (data) {
+                    if (data == "1") {
+                        console.log('Reedireccionar a raiz')
+                        //document.location.href = "@Url.Content("~/")"
+                    } else {
+                        alert(data)
+                    }
+                })
+            })
+        })
+    </script>
+}
