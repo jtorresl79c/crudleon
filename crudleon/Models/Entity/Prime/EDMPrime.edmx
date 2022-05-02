@@ -20,6 +20,7 @@
           <Property Name="email" Type="varchar" MaxLength="50" />
           <Property Name="password" Type="varchar" MaxLength="100" />
           <Property Name="idState" Type="int" />
+          <Property Name="edad" Type="int" />
         </EntityType>
         <Association Name="FK_users_cstates">
           <End Role="cstates" Type="Self.cstates" Multiplicity="0..1" />
@@ -69,6 +70,7 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="idState" Type="Int32" />
+          <Property Name="edad" Type="Int32" />
           <NavigationProperty Name="cstate" Relationship="primeModel.FK_users_cstates" FromRole="user" ToRole="cstate" />
         </EntityType>
         <Association Name="FK_users_cstates">
@@ -100,6 +102,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="primeModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="edad" ColumnName="edad" />
                 <ScalarProperty Name="idState" ColumnName="idState" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="email" ColumnName="email" />
