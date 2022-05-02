@@ -29,9 +29,8 @@
                 //url = "~/Access/Enter" En MVC 4 esto se puede hacer creo, en MVC 3 se tenia que usar el Url.Content
                 parametros = $(this).serialize()
 
-                console.log(url)
-
                 $.post(url, parametros, function (data) {
+                    console.log(data)
                     if (data == "1") {
                         console.log('Reedireccionar a raiz')
                         //document.location.href = "@Url.Content("~/")"

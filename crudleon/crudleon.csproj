@@ -133,6 +133,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\Prime\cstate.cs">
+      <DependentUpon>EDMPrime.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Prime\EDMPrime.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EDMPrime.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Prime\EDMPrime.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EDMPrime.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Prime\EDMPrime.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EDMPrime.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Prime\user.cs">
+      <DependentUpon>EDMPrime.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,8 +165,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Entity\Prime\EDMPrime.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EDMPrime.edmx</DependentUpon>
+      <LastGenOutput>EDMPrime.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entity\Prime\EDMPrime.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EDMPrime.edmx</DependentUpon>
+      <LastGenOutput>EDMPrime.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\Entity\Prime\EDMPrime.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EDMPrime.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Entity\Prime\EDMPrime.edmx.diagram">
+      <DependentUpon>EDMPrime.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -175,7 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\EntityPrimeDB\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
