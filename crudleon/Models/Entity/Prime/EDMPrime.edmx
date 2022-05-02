@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="primeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="primeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cstates">
           <Key>
             <PropertyRef Name="id" />
@@ -41,18 +41,25 @@
             <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="primeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="primeEntitiesDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cstates" EntityType="primeModel.cstate" />
+          <EntitySet Name="users" EntityType="primeModel.user" />
+          <AssociationSet Name="FK_users_cstates" Association="primeModel.FK_users_cstates">
+            <End Role="cstate" EntitySet="cstates" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="cstate">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="users" Relationship="Self.FK_users_cstates" FromRole="cstates" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="primeModel.FK_users_cstates" FromRole="cstate" ToRole="user" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -62,28 +69,20 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="idState" Type="Int32" />
-          <NavigationProperty Name="cstate" Relationship="Self.FK_users_cstates" FromRole="users" ToRole="cstates" />
+          <NavigationProperty Name="cstate" Relationship="primeModel.FK_users_cstates" FromRole="user" ToRole="cstate" />
         </EntityType>
         <Association Name="FK_users_cstates">
-          <End Role="cstates" Type="Self.cstate" Multiplicity="0..1" />
-          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <End Type="primeModel.cstate" Role="cstate" Multiplicity="0..1" />
+          <End Type="primeModel.user" Role="user" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="cstates">
+            <Principal Role="cstate">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="users">
+            <Dependent Role="user">
               <PropertyRef Name="idState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="primeEntitiesDB" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="cstates" EntityType="Self.cstate" />
-          <EntitySet Name="users" EntityType="Self.user" />
-          <AssociationSet Name="FK_users_cstates" Association="Self.FK_users_cstates">
-            <End Role="cstates" EntitySet="cstates" />
-            <End Role="users" EntitySet="users" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -93,18 +92,18 @@
           <EntitySetMapping Name="cstates">
             <EntityTypeMapping TypeName="primeModel.cstate">
               <MappingFragment StoreEntitySet="cstates">
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="primeModel.user">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="idState" ColumnName="idState" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
