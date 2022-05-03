@@ -13,13 +13,13 @@ namespace crudleon.Controllers
         // GET: User
         public ActionResult Index()
         {
-            List<User> list = null;
+            List<UserTableViewModel> list = null;
             using(primeEntitiesDB db = new primeEntitiesDB())
             {
                 list = (from u in db.users
                         where u.idState == 1
                         orderby u.email
-                        select new User // Aqui podemos ver que el 'select n' es como el return
+                        select new UserTableViewModel // Aqui podemos ver que el 'select n' es como el return
                         // aqui le estamos diciendo que regrese un objeto User (y le pasamos la info)
                         // y cada elemento del list contiene un obj User
                         {

@@ -154,7 +154,7 @@
     <Compile Include="Models\Entity\Prime\user.cs">
       <DependentUpon>EDMPrime.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TableViewModels\User.cs" />
+    <Compile Include="Models\TableViewModels\UserTableViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

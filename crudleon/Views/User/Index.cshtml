@@ -1,6 +1,6 @@
 ﻿@*@using crudleon.Models.TableViewModels;*@
 @*Esto de abajo se escribio a mano, el .User*@
-@model List<crudleon.Models.TableViewModels.User>
+@model List<crudleon.Models.TableViewModels.UserTableViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -18,7 +18,7 @@
             </tr>
 
             @*@foreach (var oElemento in Model)*@
-            @foreach (crudleon.Models.TableViewModels.User oElemento in Model)
+            @foreach (crudleon.Models.TableViewModels.UserTableViewModel oElemento in Model)
             {
                 <tr>
                     <td>@oElemento.Id</td>

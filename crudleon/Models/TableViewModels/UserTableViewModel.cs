@@ -5,7 +5,7 @@ using System.Web;
 
 namespace crudleon.Models.TableViewModels
 {
-    public class User
+    public class UserTableViewModel
     {
         public int Id { get; set; }
         public string Email { get; set; }
