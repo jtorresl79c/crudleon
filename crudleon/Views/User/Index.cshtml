@@ -1,7 +1,6 @@
 ﻿@*@using crudleon.Models.TableViewModels;*@
 @*Esto de abajo se escribio a mano, el .User*@
 @model List<crudleon.Models.TableViewModels.UserTableViewModel>
-
 @{
     ViewBag.Title = "Index";
 }
@@ -30,8 +29,34 @@
                     <td>@oElemento.Id</td>
                     <td>@oElemento.Email</td>
                     <td>@oElemento.Edad</td>
+                    <td>
+                        <input onclick="jsDelete(@oElemento.Id)" type="button" name="deleteBtn[]" value="Eliminar" class="btn btn-danger"/>
+                        <input onclick="document.location.href = '@Url.Content("~/User/Edit/" + oElemento.Id)'" type="button" name="editBtn[]" value="Editar" class="btn btn-default"/>
+                    </td>
                 </tr>
             }
         </table>
     </div>
 </div>
+
+
+@section scripts{
+    <script>
+        function jsDelete(id) {
+            if (confirm("Seguro?")) {
+                url = "@Url.Content("~/User/Delete")" + "/" + id
+
+                $.post(url, function (data){
+
+                    if (data == "1") {
+                        document.location.href = "@Url.Content("~/User/")"
+                    } else {
+                        alert("Ocurrio un error")
+                    }
+
+                })
+
+            }
+        }
+    </script>
+}

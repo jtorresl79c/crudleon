@@ -1,0 +1,74 @@
+﻿@model crudleon.Models.ViewModels.EditUserViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        @*Nombre del Metodo, Nombre del Controller*@
+        @*@using (Html.BeginForm("Add", "User", FormMethod.Post, new { role = "form", @class = "form" }))*@
+        @*Recuerda que si el nombre del Action Controller es igual al nombre del View podemos solo poner el Html.BeginForm() a secas*@
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(d=>d.Id)
+            @Html.AntiForgeryToken()
+
+
+
+            //////////////////////////////////////////////////////////////////////////////////// Explicacion
+            ///
+
+            // Si bien dicen "For" no quiere decir que se imprimieran varios, la misma documentacion te dice que se usa para indicar que se usara una forma
+            // de escribir el Helper que esta fuermente tipado, el arrow function (que se llama lambda aqui) puede ser una pista de porque le pusieron for
+            // pero repito, no es porque se van a imprimir varios o algo por el estilo
+
+            // Los Helpers tambien son utiles porque si hay errores de validacion, al regresar el form automaticamente los campos se llenan con los datos
+            // que ya se habian puesto
+
+            // Las validaciones se ponen desde el Model con los Data Annotations, el como se hace esa validacion de forma tan automatica tampoco es tan misterioso, recordemos
+            // que arriba en el codigo se asocio el View con el Model @model crudleon.Models.ViewModels.UserViewModel y el Controller lo sabe.
+
+
+            @Html.LabelFor(m => m.Email) // Renderiza un <label for=PropertyNameOfModel>PropertyNameOfModel || Data Anotation [Display(Name = "Correo Electronico")]</label> = <label for="Email">Correo Electronico</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" }) // Renderiza un <input id=PropertyNameOfModel name=PropertyNameOfModel {...MasCosas}> = <input id="Email" name="Email" class="form-control">
+
+            // El primer parametro es el nombre de la propiedad en el model, por ejemplo,
+            // aqui usamos el model UserViewModel.cs: UserViewModel.Email, UserViewModel.Password
+            // UserViewModel.ConfirmPassword, UserViewModel.Edad, por lo que para el primer parametro
+            // Se podria poner: Email, Password,ConfirmPassword o Edad: @Html.ValidationMessage("Email", new { @class="text-danger" }),
+            // @Html.ValidationMessage("Edad", new { @class="text-danger" }), @Html.ValidationMessage("Password", new { @class="text-danger" }),etc
+            // Aqui no se puedo ninguno de los anteriormente mensionados
+            @*@Html.ValidationMessage("Email")*@
+            @Html.ValidationMessageFor(m => m.Email) // Siempre es mejor poner el fuertemente tipado
+
+
+            @*@Html.LabelFor(m => m.Email) // Renderiza un <label for=PropertyNameOfModel>PropertyNameOfModel || Data Anotation [Display(Name = "Correo Electronico")]</label> = <label for="Email">Correo Electronico</label>
+            @Html.TextBoxFor(m => m.Email) // Renderiza un <input id=PropertyNameOfModel name=PropertyNameOfModel {...MasCosas}> = <input id="Email" name="Email">*@
+
+            //Tambien esta esta otra opcion, pero no es recomdable usar este porque esta pobremente tipado, ya que como vemos, usa un string en vez de un obj
+            //para llamar a la propiedad Email
+            @*@Html.Label("Email")
+            @Html.TextBox("Email")*@
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            /// Si una validacion del lado del back falla y regresa el formulario, .NET FRAMEWORK sabe que esto es un campo de password (porque en el Model se
+            /// se especifico [DataType(DataType.Password)], y por ello no pone la contraseña en el textbox porque ya sabe que es un password)
+
+            @Html.LabelFor(m => m.Password)
+            @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password)
+
+            @Html.LabelFor(m => m.ConfirmPassword)
+            @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
+
+            @Html.LabelFor(m => m.Edad)
+            @Html.TextBoxFor(m => m.Edad, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Edad)
+
+            <button>Enviar</button>
+
+        }
+    </div>
+</div>

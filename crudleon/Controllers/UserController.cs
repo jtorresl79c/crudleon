@@ -62,5 +62,70 @@ namespace crudleon.Controllers
 
             return Redirect(Url.Content("~/User/"));
         }
+
+        public ActionResult Edit(int id)
+        {
+            EditUserViewModel model = new EditUserViewModel();
+
+            using (var db = new primeEntitiesDB())
+            {
+                user oUser = db.users.Find(id);
+                model.Id = oUser.id;
+                model.Email = oUser.email;
+                model.Edad = (int) oUser.edad; // La propiedad oUser.edad en la base de datos es un int nulleable,
+                // en C# un int nulleable != int, EditUserViewModel.Edad es de tipo int, un int nulleable en
+                // C# = int?, es posible castear un int? a int, por eso se puso el (int), un int NO NULLEABLE = int
+                // por lo que en la base de datos hay que ponerlo de esa forma para evitar este tipo de cosas.
+            }
+
+            // Nuestro view Edit.cshtml tiene otros campos aparte de Email y Edad, como Password y Confirm Password, sin embargo
+            // no lo estamos pasando, en Laravel si no pasamos algo que estamos usando en el View pues va a tronar, pero aqui en
+            // Razor eso no pasa porque usamos Html Helpers, si no pasamos la informacion simeplemente el Helper lo deja vacio
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditUserViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (primeEntitiesDB db = new primeEntitiesDB())
+            {
+                user oUser = db.users.Find(model.Id);
+                oUser.email = model.Email;
+                oUser.edad = model.Edad;
+
+                if (model.Password!=null && model.Password.Trim() != "")
+                {
+                    oUser.password = model.Password;
+                }
+
+                db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return Redirect(Url.Content("~/User/"));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int Id)
+        {
+            using (primeEntitiesDB db = new primeEntitiesDB())
+            {
+                user oUser = db.users.Find(Id);
+                oUser.idState = 3;
+
+                db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return Content("1");
+        }
+
+
+
     }
 }
